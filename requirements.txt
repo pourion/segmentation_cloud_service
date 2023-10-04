@@ -5,3 +5,4 @@ opencv-python==4.8.1.78
 omegaconf
 torchsummary
 gdown
+Flask

@@ -1,0 +1,12 @@
+<!doctype html>
+<title>Upload new File</title>
+<h1>Upload new File</h1>
+<form method=post enctype=multipart/form-data>
+    <input type=file name=image>
+    <input type=submit value=Predict>
+    <br>
+    <h3>Pixel coverage: {{coverage}} </h3>
+    <br>
+    <h3>Segmented Path: {{segmented_path}} </h3>
+    <img src={{segmented_path}} alt="Segmented Image">
+</form>
