@@ -1,5 +1,8 @@
+![Screenshot](assets/segmentation_web_app.png)
 
-![Screenshot](pred_1.png)
+# Web app and cloud service development for the segmentation project described below
+
+![Screenshot](assets/pred_1.png)
 
 
 ## Image Segmentation with Uncertainty Quantification
