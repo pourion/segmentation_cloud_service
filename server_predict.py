@@ -54,4 +54,4 @@ def predict_single_image(image_obj):
     transforms = T.Compose([T.Resize((256, 256)), T.ToTensor(),])
     image = transforms(image)
     output, image_pred = model.predict(image=image)
-    return output.squeeze().cpu().numpy(), image_pred.squeeze().cpu().numpy()
+    return output.squeeze().cpu().numpy(), torch.swapaxes(image_pred.squeeze(), 0, 2).cpu().numpy()
