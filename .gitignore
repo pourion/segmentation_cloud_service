@@ -15,7 +15,7 @@
 .empty
 .conda
 
-*.png
+data/*/*/*.png
 .kaggle
 
 __pycache__
