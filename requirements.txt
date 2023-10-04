@@ -1,7 +1,7 @@
 segmentation-models-pytorch
 git+https://github.com/albumentations-team/albumentations
 opencv-contrib-python
-opencv-python
+opencv-python==4.8.1.78
 omegaconf
 torchsummary
 gdown
