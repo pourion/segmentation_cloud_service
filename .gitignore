@@ -23,3 +23,5 @@ __pycache__
 output
 data/VOC
 data/Carvana
+
+.env

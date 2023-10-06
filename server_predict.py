@@ -8,10 +8,11 @@ import torch
 from torchvision import transforms as T
 
 from segment.inference import inference_server
-from segment.analytics import uq_analytics
+# from segment.analytics import uq_analytics
 
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = 'cpu'
 
 # ----- Parameters
 cfg = OmegaConf.load("conf/config.yaml")
@@ -38,9 +39,9 @@ model = inference_server(n_channels=3,
                   device=device)
 
 # ------ Quantify Uncertainties
-uqx = uq_analytics(cfg=cfg,
-                   save_path='/workspace/output/analytics',
-                   base_filename=cfg.exp_name)
+# uqx = uq_analytics(cfg=cfg,
+#                    save_path='/workspace/output/analytics',
+#                    base_filename=cfg.exp_name)
 
 
 # ------ Evaluation
