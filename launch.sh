@@ -69,7 +69,7 @@ usage() {
 
 build() {
     set -x
-    DOCKER_FILE="docker/Dockerfile"
+    DOCKER_FILE="Dockerfile"
 
     echo -e "Building ${DOCKER_FILE}..."
     docker build \
