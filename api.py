@@ -16,38 +16,48 @@ from server_predict import predict_single_image
 
 
 app = Flask(__name__)
-UPLOAD_FOLDER = '/workspace/static'
-LOAD_PATH = '/static/'
-@app.route("/", methods=['GET', 'POST'])
+UPLOAD_FOLDER = "/workspace/static"
+LOAD_PATH = "/static/"
+
+
+@app.route("/", methods=["GET", "POST"])
 def upload_predict():
     if request.method == "POST":
-        image_file = request.files['image']
+        image_file = request.files["image"]
         if image_file:
             image_location = os.path.join(UPLOAD_FOLDER, image_file.filename)
             image_file.save(image_location)
             output, image_pred = predict_single_image(image_file)
-            
-            plt.figure(figsize=(8,8))
+
+            plt.figure(figsize=(8, 8))
             plt.imshow(output)
-            save_out = os.path.join(UPLOAD_FOLDER, f"{image_file.filename}_segmented.png")
+            save_out = os.path.join(
+                UPLOAD_FOLDER, f"{image_file.filename}_segmented.png"
+            )
             plt.savefig(save_out)
             plt.close()
-            
+
             save_out = os.path.join(UPLOAD_FOLDER, f"{image_file.filename}_pred.png")
             img.imsave(save_out, image_pred)
-            
-            load_segmented_path = os.path.join(LOAD_PATH, f"{image_file.filename}_segmented.png")
-            load_image_path = os.path.join(LOAD_PATH, f"{image_file.filename}_pred.png")
-            return render_template("index.html", 
-                                   coverage = output.mean(), 
-                                   segmented_path=load_segmented_path, 
-                                   image_path=load_image_path,
-                                   )
-        
-    return render_template("index.html", 
-                           coverage=0.004, 
-                           segmented_path='static/Taichi_S6_C2_00045.png_segmented.png', 
-                           image_path='/static/Taichi_S6_C2_00045.png_pred.png')
 
-if __name__=="__main__":
-    app.run(port=8888, debug=True)
+            load_segmented_path = os.path.join(
+                LOAD_PATH, f"{image_file.filename}_segmented.png"
+            )
+            load_image_path = os.path.join(LOAD_PATH, f"{image_file.filename}_pred.png")
+            return render_template(
+                "index.html",
+                coverage=output.mean(),
+                segmented_path=load_segmented_path,
+                image_path=load_image_path,
+            )
+
+    return render_template(
+        "index.html",
+        coverage=0.004,
+        segmented_path="static/Taichi_S6_C2_00045.png_segmented.png",
+        image_path="/static/Taichi_S6_C2_00045.png_pred.png",
+    )
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), debug=True)

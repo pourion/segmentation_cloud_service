@@ -7,5 +7,5 @@ RUN apt update && \
 COPY ./requirements.txt /tmp/requirements.txt
 RUN pip3 install -r /tmp/requirements.txt
 
-EXPOSE 8888
+EXPOSE ${PORT}
 ENTRYPOINT /bin/bash -c "cd /workspace && python api.py"
