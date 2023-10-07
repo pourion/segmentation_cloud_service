@@ -5,6 +5,11 @@
 ![Screenshot](assets/pred_1.png)
 
 
+For running the production docker do 
+```
+docker run -it --gpus all -p 8080:8080 pourion/segmentation:latest
+```
+
 ## Image Segmentation with Uncertainty Quantification
 The algorithm is based on the paper https://pubmed.ncbi.nlm.nih.gov/31729078/ 
 

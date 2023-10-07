@@ -7,5 +7,15 @@ RUN apt update && \
 COPY ./requirements.txt /tmp/requirements.txt
 RUN pip3 install -r /tmp/requirements.txt
 
+RUN mkdir -p /workspace
+
+COPY . /workspace
+
 EXPOSE ${PORT}
-ENTRYPOINT /bin/bash -c "cd /workspace && python api.py"
+EXPOSE 8080
+
+# ENTRYPOINT /bin/bash -c "cd /workspace && python api.py"
+
+WORKDIR /workspace
+
+CMD python api.py

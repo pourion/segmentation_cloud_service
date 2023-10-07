@@ -1,26 +1,29 @@
 from typing import List
 from functools import partial
 
-import torch 
+import torch
 import torch.nn as nn
 from segment.nn_models import UNet
 
 
 class inference(nn.Module):
-    def __init__(self, 
-                 n_channels: int = 3,
-                 n_classes: int = 1,
-                 bilinear: bool = False,
-                 ddims: List = [64, 128, 256, 512, 1024],
-                 device: str = 'cuda'):
+    def __init__(
+        self,
+        n_channels: int = 3,
+        n_classes: int = 1,
+        bilinear: bool = False,
+        ddims: List = [64, 128, 256, 512, 1024],
+        device: str = "cuda",
+    ):
         self.device = device
-        model = UNet(n_channels=n_channels,
-                    n_classes=n_classes,
-                    bilinear=bilinear,
-                    ddims=ddims,
-                    )
+        model = UNet(
+            n_channels=n_channels,
+            n_classes=n_classes,
+            bilinear=bilinear,
+            ddims=ddims,
+        )
         model.to(device)
-        model.load_state_dict(torch.load('best_model.pt'))
+        model.load_state_dict(torch.load("best_model.pt"))
         self.predict = partial(self.get_segment_fn, model=model)
 
     def get_segment_fn(self, model, data, idx):
@@ -31,22 +34,27 @@ class inference(nn.Module):
         return out, image, mask
 
 
-
 class inference_server(nn.Module):
-    def __init__(self, 
-                 n_channels: int = 3,
-                 n_classes: int = 1,
-                 bilinear: bool = False,
-                 ddims: List = [64, 128, 256, 512, 1024],
-                 device: str = 'cuda'):
+    def __init__(
+        self,
+        n_channels: int = 3,
+        n_classes: int = 1,
+        bilinear: bool = False,
+        ddims: List = [64, 128, 256, 512, 1024],
+        device: str = "cpu",
+    ):
         self.device = device
-        model = UNet(n_channels=n_channels,
-                    n_classes=n_classes,
-                    bilinear=bilinear,
-                    ddims=ddims,
-                    )
+        model = UNet(
+            n_channels=n_channels,
+            n_classes=n_classes,
+            bilinear=bilinear,
+            ddims=ddims,
+        )
         model.to(device)
-        model.load_state_dict(torch.load('best_model.pt'))
+        # model.load_state_dict(torch.load("best_model.pt"))
+        model.load_state_dict(
+            torch.load("best_model.pt", map_location=torch.device(self.device))
+        )
         self.predict = partial(self.get_segment_fn, model=model)
 
     def get_segment_fn(self, model, image):
