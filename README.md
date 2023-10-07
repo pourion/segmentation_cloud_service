@@ -10,6 +10,17 @@ For running the production docker do
 docker run -it --gpus all -p 8080:8080 pourion/segmentation:latest
 ```
 
+On Google Cloud Platform (GCP) you can use the following command in the Console shell to build the Docker image:
+```
+$ gcloud builds submit gcr.io/segmentation-service-pam/segment
+```
+and then deploy the Docker image by
+```
+$ gcloud run deploy - -image gcr.io/segmentation-service-pam/segment
+```
+
+As of now (October 6th) the service is running and available at https://segment-zkkr3aigja-uc.a.run.app/ 
+
 ## Image Segmentation with Uncertainty Quantification
 The algorithm is based on the paper https://pubmed.ncbi.nlm.nih.gov/31729078/ 
 
